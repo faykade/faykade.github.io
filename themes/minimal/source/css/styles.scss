@@ -1,0 +1,6 @@
+$primary_color: hexo-theme-config('primary_color');
+$secondary_color: hexo-theme-config('secondary_color');
+
+body {
+    background-color: $secondary_color;
+}
