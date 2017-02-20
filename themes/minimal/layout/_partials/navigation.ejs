@@ -1,0 +1,26 @@
+<div data-sticky-container class="hide-for-small">
+  <div class="small-12 sticky" id="nav-menu" data-sticky data-sticky-on="small" data-options="marginTop: 0">
+    <div class="top-bar">
+      <div class="no-js top-bar-title">
+        <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+          <button class="menu-icon dark" type="button" data-toggle></button>
+        </span>
+      </div>
+      <div id="responsive-menu" class="no-js">
+        <nav class="top-bar-left">
+          <ul class="dropdown menu vertical medium-horizontal" data-responsive-menu="accordion medium-dropdown">
+            <% for (var i in theme.menu){ %>
+              <li><a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
+            <% } %>
+          </ul>
+        </nav>
+        <div class="top-bar-right">
+          <ul class="menu">
+            <li><input type="search" placeholder="Search"></li>
+            <li><button type="button" class="button">Search</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

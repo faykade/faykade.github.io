@@ -1,3 +1,4 @@
-# colors
-primary_color: grey
-secondary_color: blue
+menu:
+  Home: /
+  Categories: /categories
+  About: /about 
