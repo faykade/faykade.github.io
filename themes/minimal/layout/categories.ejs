@@ -4,3 +4,6 @@
 <%- JSON.stringify(site.categories) %>
 <% console.log(site.tags) %>
 <%- JSON.stringify(site.tags) %>
+<%- list_tags({show_count: true, sort: 1}) %>
+<%- tagcloud() %>
+<%- list_archives() %>

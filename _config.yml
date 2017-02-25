@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Simple Facade
+title: The Faykade
 subtitle:
 description: A simple blog to illustrate my interests in programming, television, nature, and anything else
 author: Thomas Ulrich
@@ -12,7 +12,7 @@ timezone: US/Central
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://faykade.github.io
+url: http://localhost:4000
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: minimal
+theme: light
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -77,3 +77,5 @@ node_sass:
   outputStyle: nested
   precision: 5
   sourceComments: false
+
+disqus_shortname: faykade
