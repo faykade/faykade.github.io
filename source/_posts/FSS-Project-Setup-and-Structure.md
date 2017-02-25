@@ -12,10 +12,10 @@ Determining project structure becomes especially important when using different 
 ## Structure
 This project won't be too complex, and won't involve any build systems, so we will have a pretty simple project setup.  Create the following directories.  While these directories are both housed in the same project, it is important to realize that they are decoupled as much as possible, and wouldn't need to be in the same project folder.
 ```
-- strawpoll
-    - server
-        - models
-    - client
++ strawpoll
+    + client
+    + server
+        + models
 ```
 
 ## Setup

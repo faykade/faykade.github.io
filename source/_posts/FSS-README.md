@@ -13,7 +13,6 @@ tags:
   - HTML
   - Javascript
   - Mongoose
-  - Postman
   - JQuery
 ---
 Build a Full Stack Strawpoll, start to finish.  This project is intended to teach the basics of a traditional client/server model using Node.js and Express to create a REST API backed by MongoDB.  Then, after building up the server side, we will using traditional front end technologies like HTML/CSS/Javascript to interact with the server.  Eventually, the plan is to link this up in another tutorial to create a Hexo plugin that will insert a strawpoll on a blog post.
@@ -25,3 +24,8 @@ If you aren't well versed in some of the basics of the following technologies, I
 
 
 ## Tutorial
+* {% post_link FSS-Project-Setup-and-Structure %}
+* Server Side
+  * {% post_link FSS-Server-Side-1 %}
+  * {% post_link FSS-Server-Side-2 %}
+  * {% post_link FSS-Server-Side-3 %}
