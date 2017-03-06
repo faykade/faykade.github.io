@@ -30,8 +30,16 @@ So, this is the information that we will need to provide to the model to success
 app.post('/api/poll', function(req, res){
   if(req.body && req.body.poll_name && req.body.poll_options){
     var newPoll = new Poll();
+    var constructedOptions = [];
+    var options = req.body.poll_options;
+    options.forEach(function(currentOption){
+      constructedOptions.push({
+        option_name: currentOption,
+        vote_count: 0
+      });
+    });
     newPoll.poll_name = req.body.poll_name;
-    newPoll.poll_options = req.body.poll_options;
+    newPoll.poll_options = constructedOptions;
     newPoll.poll_votes = 0;
   } else {
     res.json({
@@ -46,16 +54,24 @@ So what did we do here?  We are checking a few things in the if statement:
 * Is there a poll name?  This is going to be a required attribute for making a poll
 * Are there any options associate with the poll?  There should be.
 
-If all of these things are true, we set the information in the MODEL to the data that came from the REQUEST.  If anything is missing, we send a response in json format regarding the failure.  There is still more to add here though; we haven't sent a response for the success yet.  If somebody tried to post to this route now with all the appropriate information, the server would just 'hang' and never respond to the client.  
+If all of these things are true, we set the information in the **model** to the data that came from the **request**.  If anything is missing, we send a response in json format regarding the failure.  To properly set everything in our model though, we need to know the type of information we are getting.  I'm planning on getting a title sent to me, and an array of poll options.  This doesn't exactly match up with our model, since every poll option needs to have both a name and a vote count.  So, I create a temporary array (constructedOptions) and populate that with the objects that match the way the model is setup, using the information that is sent via the request.  The fields that don't come in from the request (total votes and vote count for each option) need to be filled in manually.
 
-To remedy this, let's modify the route a bit further, and actually save the data to the database using the Mongoose model method, save, and then respond back to the client whether it was successfully saved or not.  
+There is still more to add here though; we haven't sent a response for the success yet.  If somebody tried to post to this route now with all the appropriate information, the server would just 'hang' and never respond to the client.  To remedy this, let's modify the route a bit further, and actually save the data to the database using the Mongoose model method, save, and then respond back to the client whether it was successfully saved or not.  
 ```javascript
 // CREATE A POLL ---------------------------------------------------------------
 app.post('/api/poll', function(req, res){
   if(req.body && req.body.poll_name && req.body.poll_options){
     var newPoll = new Poll();
+    var constructedOptions = [];
+    var options = req.body.poll_options;
+    options.forEach(function(currentOption){
+      constructedOptions.push({
+        option_name: currentOption,
+        vote_count: 0
+      });
+    });
     newPoll.poll_name = req.body.poll_name;
-    newPoll.poll_options = req.body.poll_options;
+    newPoll.poll_options = constructedOptions;
     newPoll.poll_votes = 0;
     newPoll.save(function(err,poll){
       if(err){
@@ -104,8 +120,16 @@ var successResponse = function(msg, data){
 app.post('/api/poll', function(req, res){
   if(req.body && req.body.poll_name && req.body.poll_options){
     var newPoll = new Poll();
+    var constructedOptions = [];
+    var options = req.body.poll_options;
+    options.forEach(function(currentOption){
+      constructedOptions.push({
+        option_name: currentOption,
+        vote_count: 0
+      });
+    });
     newPoll.poll_name = req.body.poll_name;
-    newPoll.poll_options = req.body.poll_options;
+    newPoll.poll_options = constructedOptions;
     newPoll.poll_votes = 0;
     newPoll.save(function(err,poll){
       if(err){
@@ -130,9 +154,9 @@ Awesome!  You should be getting information into your database now, and polls ar
 
 ```javascript
 // GET A POLL ------------------------------------------------------------------
-app.get('/api/poll/:poll_id', function(req, res){
-  if(req.params.poll_id){
-    Poll.findOne({'_id': req.params.poll_id}, function(err, poll){
+app.get('/api/poll', function(req, res){
+  if(req.query && req.query.poll_id){
+    Poll.findOne({'_id': req.query.poll_id}, function(err, poll){
       if(err){
         res.json(errorResponse("Poll ID not found in database"));
       } else {
@@ -145,17 +169,17 @@ app.get('/api/poll/:poll_id', function(req, res){
 
 Here, all we are trying to do is do a MongoDB query.  All the MongoDB queries I've needed have been available via the Mongoose model, so here we simply try to find the 'document' that has the id of the paramater passed in.  We know that the overall poll has an object ID, so that is the ID we need to search for.  
 
-In the Postman example above, we would want to use the 58b1f3ff4c4de034b9d11241 as our poll_id parameter, so if we did another Postman request (or a browser request, since those default to GET requests), we would set our url to something like http://localhost:3000/api/poll/58b1f3ff4c4de034b9d11241 and retrieve the appropriate data.
+In the Postman example above, we would want to use the 58bcf13c70aad429bd9db245 as our poll_id parameter, so if we did another Postman request (or a browser request, since those default to GET requests), we would set our url to something like http://localhost:3000/api/poll&poll_id=58bcf13c70aad429bd9db245 and retrieve the appropriate data.
 
 
 ## Modifying an Active Poll Vote
 
 ```javascript
 // ADD VOTE  -------------------------------------------------------------------
-app.put('/api/poll/:poll_id/:option_id', function(req, res){
-  if(req.params.poll_id && req.params.option_id){
+app.put('/api/poll', function(req, res){
+  if(req.body && req.body.poll_id && req.body.option_id){
     Poll.findOneAndUpdate(
-      {'_id': req.params.poll_id, 'poll_options._id' : req.params.option_id},
+      {'_id': req.body.poll_id, 'poll_options._id' : req.body.option_id},
       {'$inc': {'poll_votes' : 1, 'poll_options.$.vote_count': 1}},
       {new: true},
       function(err, poll){
@@ -173,7 +197,14 @@ This route is a bit trickier to understand, and it took me a little while to fig
 
 We use the $inc operator to do this, and the 1 is just a parameter about how much we want to increment the value that is currently in there.  Adding {new, true} to the query also tells MongoDB to return the updated document, otherwise the default is to return the original document before the increment.  We don't want to know what the vote counts were BEFORE we incremented them, we want to know what they are after the increment.
 
-To call this, we simply need the poll id and the vote id.  So, in the Postman example above, an example request to modify the 'Yes' vote would be to do a PUT request to http://localhost:3000/api/poll/58b1f3ff4c4de034b9d11241/58b1f3ff4c4de034b9d11243 and both the total votes and the specific option vote count will get incremented.
+To call this, we simply need the poll id and the vote id.  So, in the Postman example above, an example request to modify the 'Yes' vote would be to do a PUT request to http://localhost:3000/api/poll and send the data as shown below.  both the total votes and the specific option vote count will get incremented.
+
+```javascript
+{
+  "poll_id": "58bcf13c70aad429bd9db245",
+  "option_id": "58bcf13c70aad429bd9db247"
+}
+```
 
 ## Conclusion of Server Side
 That's it!  We have the basic service set up for our Strawpoll.  Next up, we'll start on the client side to actually interact with this service, since this is a full stack project after all and we want to learn how to effectively interact with a REST API.  We'll set up the basic functionality, and then try and pretty it up a bit to see the full project spectrum.  

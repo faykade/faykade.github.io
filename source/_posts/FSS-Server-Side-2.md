@@ -92,12 +92,12 @@ app.post('/api/poll', function(req, res){
 });
 
 // GET A POLL ------------------------------------------------------------------
-app.get('/api/poll/:poll_id', function(req, res){
+app.get('/api/poll', function(req, res){
   res.send('getting a poll');
 });
 
 // ADD VOTE  -------------------------------------------------------------------
-app.put('/api/poll/:poll_id/:option_id', function(req, res){
+app.put('/api/poll', function(req, res){
   res.send('adding a vote');
 });
 

@@ -66,7 +66,7 @@ So, lets prefix our API routes with 'api', and our next level of specificity for
 With that decided, what do we want this strawpoll to do?  What are the primary actions that need to be taken?  What extra information do we need to complete these major operations?  So, add the following near your app.get('/'...) line in server.js
 
 ### Creating a new poll
-So, thinking to our HTTP request types, creating anything new should be a POST request.  We won't need any other information here, we just know that we want to make a new poll.  This will be the basis of our route for this.
+So, thinking to our HTTP request types, creating anything new should be a POST request.  We won't need any other information here, we just know that we want to make a new poll.  This will be the basis of our route for this, so we will make our first route 'endpoint'.
 
 ```javascript
 // CREATE A POLL ---------------------------------------------------------------
@@ -76,7 +76,7 @@ app.post('/api/poll', function(req, res){
 ```
 
 ### Getting an active poll
-Alright, back to the HTTP requests, if we are just going to be retrieving data, we want to send a get request.  This request might look a little different because we use ':poll_id' as part of the route.  This is Express' way of showing a variable route.  This will match anything from /api/poll/dog to /api/poll/123456.  We just know we need a unique ID for every poll.
+Alright, back to the HTTP requests, if we are just going to be retrieving data, we want to send a get request.  There are a couple of ways to do this, and I debated on this a bit while writing this tutorial.  The first way is to follow our idea of working from the least specific to the most specific, and utilizing the route parameters that express offer us.  This request might look a little different because we use ':poll_id' as part of the route.  This is Express' way of showing a variable route.  This will match anything from /api/poll/dog to /api/poll/123456.  We just know we need a unique ID for every poll.
 
 ```javascript
 // GET A POLL ------------------------------------------------------------------
@@ -85,12 +85,21 @@ app.get('/api/poll/:poll_id', function(req, res){
 });
 ```
 
+The second option, and **one I'm going to utilize**, is to actually use the same endpoint as we used to create a poll, and instead pass the relevant information as part of a query string.  I'm choosing this methodology because I see all of these as operations on a poll in general, and if I can minimize the amount of endpoints I need to use, the easier it is to remember.  The way express differentiates the routes is through the HTTP request type.  Here, I'm going to use a GET request, and it would be accessed via something like /api/poll?poll_id=123456789.  How we get the data will be covered in an upcoming part of the tutorial.
+
+```javascript
+// GET A POLL ------------------------------------------------------------------
+app.get('/api/poll', function(req, res){
+  res.send('getting a poll');
+});
+```
+
 ### Increasing the votes of a poll option
-The final route we will need is to add a vote.  We know that we need the specific poll information, and we need to know the option the user is voting for.  Again, we will utilize Express' variable routes to handle this type of a request.  Also, we will use the HTTP request type of PUT, which is usually used for modifying existing data.
+The final route we will need is to add a vote.  We know that we need the specific poll information, and we need to know the option the user is voting for.  Again, we could utilize Express' variable routes to handle this type of a request, or we could use the same endpoint as before, but use an HTTP request geared more towards modifying data.  So, we will use the HTTP request type of PUT, which is usually used for modifying existing data, and the same poll endpoint.
 
 ```javascript
 // ADD VOTE  -------------------------------------------------------------------
-app.put('/api/poll/:poll_id/:option_id', function(req, res){
+app.put('/api/poll', function(req, res){
   res.send('adding a vote');
 });
 ```
