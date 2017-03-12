@@ -11,33 +11,37 @@ Making polls in Postman is all good fun, but we probably want a Graphical User I
 <!-- more -->
 ## HTML
 To start, let's make the skeleton of our HTML page.  Open up the create_poll.html file and add something like the following:
-```html
+```html poll_create.html
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Create a Poll</title>
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <title>Create a Poll</title>
+</head>
+<body>
+  <div class="content">
     <h1>Create a Poll</h1>
     <form id="create_poll" name="create_poll" action="#" method="POST">
       <input type="text" placeholder="Poll Title" name="poll_title" class="poll_title"></br>
       <div class="options">
         <div class="option_line">
           <input type="text" placeholder="Option..." class="poll_option">
-          <button class="remove_option">-</button>
+          <button type="button" class="remove_option" tabindex="-1">-</button>
         </div>
       </div>
-      <button class="add_option">+</button>
-      <button type="reset">Clear</button>
-      <button type="submit">Submit</button>
+      <div class="buttons_container">
+        <button type="button" class="add_option">+</button>
+        <button type="reset">Clear</button>
+        <button type="submit">Submit</button>
+      </div>
     </form>
     <div class="poll_link">
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="../scripts/util.js"></script>
-    <script src="../scripts/poll_create.js"></script>
-  </body>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="../scripts/util.js"></script>
+  <script src="../scripts/poll_create.js"></script>
+</body>
 </html>
 ```
 The output of this html is shown here:
@@ -60,12 +64,13 @@ So, let's go through these one at a time.
 
 ## Add an option (+ button)
 To add an option, we need a new input field, so open the poll_create.js file and add the following lines.
-```javascript
+```javascript poll_create.js
 var addOption = function(e){
   e.preventDefault();
+  e.stopPropagation();
   var div = '<div class="option_line">';
   var input = '<input type="text" placeholder="Option..." class="poll_option">';
-  var button = '<button class="remove_option">-</button>';
+  var button = '<button type="button" class="remove_option">-</button>';
   $('.options').append(div + input + button + '</div>');
   $('.options input[type=text]').last().focus();
 };
@@ -81,11 +86,11 @@ So what is going on here?  First off, we stop the default behavior of the button
 <div class="options">
   <div class="option_line">
     <input type="text" placeholder="Option..." class="poll_option">
-    <button class="remove_option">-</button>
+    <button type="button" class="remove_option">-</button>
   </div>
   <div class="option_line">
     <input type="text" placeholder="Option..." class="poll_option">
-    <button class="remove_option">-</button>
+    <button type="button" class="remove_option">-</button>
   </div>
 </div>
 ```
@@ -101,10 +106,11 @@ Sweet, now we can add new input boxes for a user to enter options into.
 ## Removing an option (- button)
 So, we have the Yin of adding options, let's do the Yang and add the ability to remove options.  Edit your code to have the following in it in the poll_create.js file.  
 
-```javascript
+```javascript poll_create.js
 // ...
 var removeOption = function(e){
   e.preventDefault();
+  e.stopPropagation();
   var $parent = $(this).parent();
   $parent.remove();
 };
@@ -137,7 +143,7 @@ That's it! Done with removing options.
 ## Submit the request (submit button)
 Okay, the biggest part of the whole deal, submitting the request.  Let's break this one down a bit more, since there is a bit more going on.  Start by simply adding these lines to your poll_create.js file
 
-```javascript
+```javascript poll_create.js
 // ...
 var isValidTitle = function($title){
   return $title && $title.val() && $title.val().trim();
@@ -149,12 +155,16 @@ var areValidOptions = function($options){
 
 var createPoll = function(e){
   e.preventDefault();
+  e.stopPropagation();
   var $title = $('.poll_title');
   var $options = $('.poll_option');
 
   if(isValidTitle($title) && areValidOptions($options)){
     var request = buildRequest($title, $options);
     makeRequest(request, displayPollLink);
+  }
+  else {
+    alert("Invalid data to make a poll");
   }
 };
 // ...
@@ -170,7 +180,7 @@ What got added here?  We created an event listener for when the form is submitte
 The rest is a little abstract right now because I haven't shown all of the code, but just theoretically try to understand what is going on.  If the title and options are valid, I am going to call some function buildRequest to physically create the request, and then make the request to the server using the makeRequest function (using the request that was built in buildRequest).  Here, displayPollLink is going to be used as a **callback** function.  So, when the request is completed and I know everything was successful, I want to display the poll link.  Now that the core idea is understood here, add the functions that I was just describing to the code.  
 
 
-```javascript
+```javascript poll_create.js
 // ...
 var buildRequest = function($title, $options){
   var ajaxData = {
