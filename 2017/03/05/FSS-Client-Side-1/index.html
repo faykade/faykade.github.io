@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Project Setup and Structure (Full Stack Strawpoll) | Project Based Learning</title>
+  <title>Client Side Part I - Setup - (Full Stack Strawpoll) | Project Based Learning</title>
   <meta name="author" content="Thomas Ulrich">
   
   <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Project Setup and Structure (Full Stack Strawpoll)"/>
+  <meta property="og:title" content="Client Side Part I - Setup - (Full Stack Strawpoll)"/>
   <meta property="og:site_name" content="Project Based Learning"/>
 
   
@@ -51,35 +51,25 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-02-25T04:32:29.000Z"><a href="/2017/02/24/FSS-Project-Setup-and-Structure/">2017-02-24</a></time>
+        <time datetime="2017-03-06T03:06:06.000Z"><a href="/2017/03/05/FSS-Client-Side-1/">2017-03-05</a></time>
       
       
   
-    <h1 class="title">Project Setup and Structure (Full Stack Strawpoll)</h1>
+    <h1 class="title">Client Side Part I - Setup - (Full Stack Strawpoll)</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Before starting any project, it is important to spend some time thinking about the directory structure.  It may seem like a waste of time, because we all just want to start writing code once we get it into our heads to start something like this, but it is always worthwhile to really think out the way your project will be laid out, and will pay dividends in the long run.  </p>
-<p>Determining project structure becomes especially important when using different build systems like Gulp.  This post also covers the different installations needed for this project.<br><a id="more"></a></p>
-<h2 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h2><p>This project won’t be too complex, and won’t involve any build systems, so we will have a pretty simple project setup.  Create the following directories.  While these directories are both housed in the same project, it is important to realize that they are decoupled as much as possible, and wouldn’t need to be in the same project folder.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ strawpoll</div><div class="line">    + client</div><div class="line">    + server</div><div class="line">        + models</div></pre></td></tr></table></figure></p>
-<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><ul>
-<li>Recommended<ul>
-<li><a href="https://git-scm.com/downloads" target="_blank" rel="external">Git</a></li>
-<li><a href="https://www.getpostman.com/" target="_blank" rel="external">Postman</a></li>
-</ul>
-</li>
-<li>Required<ul>
-<li><a href="https://node.js" target="_blank" rel="external">Node.js &amp;&amp; NPM</a></li>
-<li>A MongoDB instance, I personally recommend using <a href="https://mlab.com" target="_blank" rel="external">MLab</a>, but you can also use a local setup if you want to install MongoDB</li>
-</ul>
-</li>
-</ul>
-<p>Now that we have the basic installations, lets get the packages we will need for the project installed.  Open a terminal, navigate to the project directory (I named it strawpoll), and execute the following commands one at a time:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">npm init     // follow the on screen prompts to create your node package</div><div class="line">npm install --save express</div><div class="line">npm install --save body-parser</div><div class="line">npm install --save mongoose</div></pre></td></tr></table></figure>
-<p>Express will be our router, and body-parser is needed to effectively read information posted to our different routes.  Mongoose is useful because it simplifies all of the transactions we will need to utilize with our database and allows us to create schemas, which is something that is missing if you are using something like the mongodb package.  </p>
-<p>That’s it! We’re ready to actually start the project.</p>
+        <p>So, we’ve finished our server side of the full stack Strawpoll.  We’ve successfully created a REST API that will create, get, and modify polls and store them for later usage.  Now, we want to create the front end, or client side of the equation.  To do this, we first have a little bit of work to do to get setup, then we’ll go into the details.</p>
+<p>To briefly understand what we are trying to accomplish, we are going to use JQuery to do AJAX requests to our service based off of the data on our pages.  This means we are using asynchronous methodologies to make sure our operations are successful before we go through with anything.<br><a id="more"></a></p>
+<h2 id="A-Bit-More-Server-Side"><a href="#A-Bit-More-Server-Side" class="headerlink" title="A Bit More Server Side"></a>A Bit More Server Side</h2><p>Alright, I’m sorry I lied to you, we have a bit of work to do on our server side still, but not much, I swear!  The reasoning behind this is that you cannot do AJAX requests from a file hosted on your own computer, you need it hosted on a server of some sorts.  Just to be clear here, I’m going to host these files on the same server that we are using for our Strawpoll service, but they could be hosted anywhere, and that is an important thing to take note of, because many API’s that you interact with will not be hosted on your own server.  </p>
+<p>We’re going to create a very simple setup to host our files, so open up our server.js file, and add the following lines somewhere near the other app.use sections of the code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.use(express.static(<span class="string">'./../client'</span>));</div></pre></td></tr></table></figure>
+<p>This will allow us to serve STATIC files from our client folder on the server.  What does this mean?  It means that any type of file that is in the client directory can be accessed when the server is created.  As an example, and to complete our initial setup, modify the structure of our client directory to match this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">+ strawpoll</div><div class="line">    + client</div><div class="line">        + scripts</div><div class="line">            - poll_create.js</div><div class="line">            - util.js</div><div class="line">        + pages</div><div class="line">            - poll_create.html</div><div class="line">    + server</div></pre></td></tr></table></figure>
+<p>Now, when your server is up, you will be able to access any of the files in the client directory.  To access poll_create.html, simply navigate to <a href="http://localhost:3000/pages/poll_create.html" target="_blank" rel="external">http://localhost:3000/pages/poll_create.html</a> .  Notice that the ‘/client’ is removed from the URL.  It is also possible to create a specifically named route that you want to use for all static assets in express, so you could have something like <a href="http://localhost:3000/static/pages/poll_create.html" target="_blank" rel="external">http://localhost:3000/static/pages/poll_create.html</a></p>
+<p>Generally, these static files are reserved for things like just images/css/javascript/fonts that never changes, and we would instead use something like a templating engine to create our HTML pages.  However, our application is simplistic enough and I want to show a separation of concerns between the server/client, so we’ll directly serve our html files here as well to narrow the scope of this project a bit.</p>
 
       
     </div>
@@ -89,7 +79,7 @@
         
   
   <div class="tags">
-    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/Project-Structures/">Project Structures</a>
+    <a href="/tags/HTML/">HTML</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/JQuery/">JQuery</a>, <a href="/tags/Node-js/">Node.js</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>
   </div>
 
         

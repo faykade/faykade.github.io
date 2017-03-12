@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Client Side Part II - Creating a Poll - (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Client Side Part II - Creating a Poll - (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-06T03:28:00.000Z"><a href="/2017/03/05/FSS-Client-Side-2/">2017-03-05</a></time>
+      
+      
+  
+    <h1 class="title">Client Side Part II - Creating a Poll - (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Making polls in Postman is all good fun, but we probably want a Graphical User Interface (GUI) for people to interact with our service, so we’re going to start with poll creation.  In many ways, this has the most going on with it as well, so it will most likely be the most difficult part of the client side of this project, but we’ll get through it.  Remember, our only goal right now is functionality, we’ll come back later and pretty everything up.<br><a id="more"></a></p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>To start, let’s make the skeleton of our HTML page.  Open up the create_poll.html file and add something like the following:<br><figure class="highlight html"><figcaption><span>poll_create.html</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Create a Poll<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Create a Poll<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"create_poll"</span> <span class="attr">name</span>=<span class="string">"create_poll"</span> <span class="attr">action</span>=<span class="string">"#"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"Poll Title"</span> <span class="attr">name</span>=<span class="string">"poll_title"</span> <span class="attr">class</span>=<span class="string">"poll_title"</span>&gt;</span><span class="tag">&lt;/<span class="name">br</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"options"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"option_line"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"Option..."</span> <span class="attr">class</span>=<span class="string">"poll_option"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"remove_option"</span> <span class="attr">tabindex</span>=<span class="string">"-1"</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"buttons_container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"add_option"</span>&gt;</span>+<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"reset"</span>&gt;</span>Clear<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"poll_link"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/util.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/poll_create.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>The output of this html is shown here:</p>
+<img src="/2017/03/05/FSS-Client-Side-2/create_poll_boilerplate.png" alt="Create Poll Boilerplate" title="Create Poll Boilerplate">
+<p>Our goal is that a user can enter a poll title, then enter a poll option.  Then, they have the ability to add more poll options via the + button, or remove a specific line via the - button.  They can also clear the form or submit it at any time.  Makes sense, right?  We want users to have a poll title and poll options, so make sure to give them good functionality for that.  </p>
+<p>The important things to notice here is that each option/remove button has its own container with the class “option_line”, and each of those lines is housed in a container with the class “options”, and that we have an empty div with the class “poll_link”.</p>
+<h2 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h2><p>Now, onto the javascript portion of the client side, where the vast majority of the work is going to take place.  What are the main things we want to accomplish from this page?</p>
+<ul>
+<li>Add an option (+ button)</li>
+<li>Remove an option (- button)</li>
+<li>Submit the request (submit button)</li>
+<li>Somehow see the poll when completed</li>
+</ul>
+<p>So, let’s go through these one at a time.  </p>
+<h2 id="Add-an-option-button"><a href="#Add-an-option-button" class="headerlink" title="Add an option (+ button)"></a>Add an option (+ button)</h2><p>To add an option, we need a new input field, so open the poll_create.js file and add the following lines.<br><figure class="highlight javascript"><figcaption><span>poll_create.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> addOption = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">  e.preventDefault();</div><div class="line">  e.stopPropagation();</div><div class="line">  <span class="keyword">var</span> div = <span class="string">'&lt;div class="option_line"&gt;'</span>;</div><div class="line">  <span class="keyword">var</span> input = <span class="string">'&lt;input type="text" placeholder="Option..." class="poll_option"&gt;'</span>;</div><div class="line">  <span class="keyword">var</span> button = <span class="string">'&lt;button type="button" class="remove_option"&gt;-&lt;/button&gt;'</span>;</div><div class="line">  $(<span class="string">'.options'</span>).append(div + input + button + <span class="string">'&lt;/div&gt;'</span>);</div><div class="line">  $(<span class="string">'.options input[type=text]'</span>).last().focus();</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// SCRIPT EXECUTION ------------------------------------------------------------</span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  $(<span class="string">'.add_option'</span>).on(<span class="string">'click'</span>, addOption);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>So what is going on here?  First off, we stop the default behavior of the button, which is to submit the form.  Then, we are essentially recreating all of the pieces of the ‘option_line’ container that is in our boilerplate example above as strings.  Then, we are using a JQuery selector to find the container with the class ‘options’ and appending all of those strings at the <strong>end</strong> of the HTML for that container/part of the document object model(DOM).  So, this preserves the original HTML in our ‘options’ container, and adds new HTML to the end of it.  So, basically, the relevant part of our HTML would result in something like this after completion, if we were going from the example above:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"options"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"option_line"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"Option..."</span> <span class="attr">class</span>=<span class="string">"poll_option"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"remove_option"</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"option_line"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"Option..."</span> <span class="attr">class</span>=<span class="string">"poll_option"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"remove_option"</span>&gt;</span>-<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>and the relevant image:<br><img src="/2017/03/05/FSS-Client-Side-2/poll_create_added.png" alt="Create Poll After Added Option" title="Create Poll After Added Option"></p>
+<p>Since this is happening dynamically and not on page load, if you use inspector tools in your browser, you will be able to see the new DOM element there, but not when you do a view page source.  As you can see, there is a problem with the way these remove buttons are lining up already.  This is because in our HTML we put the input box and the remove box on different lines, but in our Javascript, we are just creating one big string and throwing it into the DOM at once.  But, we’re not worried about appearances for now, just functionality.</p>
+<p>The final part of the code we have, is that when you add an input box, it only makes sense that you are ready to add another option, so we use a JQuery selector once again to find the input box we just added, and focus it so you can start typing immediately once it has been added to the page.  This is more just a quality of life aspect than functional, but these are what differentiate a good experience from a bad experience usually.</p>
+<p>Sweet, now we can add new input boxes for a user to enter options into.  </p>
+<h2 id="Removing-an-option-button"><a href="#Removing-an-option-button" class="headerlink" title="Removing an option (- button)"></a>Removing an option (- button)</h2><p>So, we have the Yin of adding options, let’s do the Yang and add the ability to remove options.  Edit your code to have the following in it in the poll_create.js file.  </p>
+<figure class="highlight javascript"><figcaption><span>poll_create.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="keyword">var</span> removeOption = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">  e.preventDefault();</div><div class="line">  e.stopPropagation();</div><div class="line">  <span class="keyword">var</span> $parent = $(<span class="keyword">this</span>).parent();</div><div class="line">  $parent.remove();</div><div class="line">&#125;;</div><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="comment">// SCRIPT EXECUTION ------------------------------------------------------------</span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  $(<span class="string">'.add_option'</span>).on(<span class="string">'click'</span>, addOption);</div><div class="line">  $(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.remove_option'</span>, removeOption);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>Even easier, right?  It makes less sense though.  What we are doing is immediately stopping the form from submitting again.  Then, remember the way our DOM is setup, as shown below.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">options</div><div class="line">    option_line</div><div class="line">        input</div><div class="line">        remove button</div><div class="line">    option_line</div><div class="line">        input</div><div class="line">        remove button</div><div class="line"><span class="comment">//... etc</span></div></pre></td></tr></table></figure></p>
+<p>When a user clicks the remove button, an event (e) is triggered, and our code knows exactly where that event came from, and that is always ‘this’ in javascript, the context of where a function was called from.  Using ‘this’ can get tricky at times, but it is necessary in situations like this.  What I want to know is <strong>which</strong> remove button was clicked, and then remove the whole line from the DOM.  So, I find out which element was clicked, find its <strong>parent</strong>, and then remove that, which in turn removes everything inside of it.  So, as a result that piece of the DOM is removed from the web page.</p>
+<p>One thing that I should also explain is why the syntax is different between our add_option event handler and our remove_option event handler.  Add option is a single button that is always present on the page, so when I use the $(‘.add_option’) selector, JQuery knows which element I’m talking about.  However, since only the <strong>first</strong> option input and remove button are present on the page at page load, JQuery only knows about that one.  If I use the same type of syntax, we will only ever be able to remove the very first input box, since JQuery doesn’t know about the dynamically generated DOM elements.  </p>
+<p>To get around this, we instead attach our listener to the document object, and wait for anything with the remove_option class to get clicked instead, which JQuery will recognize, and properly call our event handler.  This is a fine detail, but is helpful to understand.</p>
+<p>That’s it! Done with removing options.</p>
+<h2 id="Submit-the-request-submit-button"><a href="#Submit-the-request-submit-button" class="headerlink" title="Submit the request (submit button)"></a>Submit the request (submit button)</h2><p>Okay, the biggest part of the whole deal, submitting the request.  Let’s break this one down a bit more, since there is a bit more going on.  Start by simply adding these lines to your poll_create.js file</p>
+<figure class="highlight javascript"><figcaption><span>poll_create.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="keyword">var</span> isValidTitle = <span class="function"><span class="keyword">function</span>(<span class="params">$title</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> $title &amp;&amp; $title.val() &amp;&amp; $title.val().trim();</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> areValidOptions = <span class="function"><span class="keyword">function</span>(<span class="params">$options</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> $options &amp;&amp; $options.length &gt; <span class="number">0</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> createPoll = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">  e.preventDefault();</div><div class="line">  e.stopPropagation();</div><div class="line">  <span class="keyword">var</span> $title = $(<span class="string">'.poll_title'</span>);</div><div class="line">  <span class="keyword">var</span> $options = $(<span class="string">'.poll_option'</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(isValidTitle($title) &amp;&amp; areValidOptions($options))&#123;</div><div class="line">    <span class="keyword">var</span> request = buildRequest($title, $options);</div><div class="line">    makeRequest(request, displayPollLink);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    alert(<span class="string">"Invalid data to make a poll"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="comment">// SCRIPT EXECUTION ------------------------------------------------------------</span></div><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  $(<span class="string">'.add_option'</span>).on(<span class="string">'click'</span>, addOption);</div><div class="line">  $(<span class="built_in">document</span>).on(<span class="string">'click'</span>, <span class="string">'.remove_option'</span>, removeOption);</div><div class="line">  $(<span class="string">'#create_poll'</span>).on(<span class="string">'submit'</span>, createPoll);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>What got added here?  We created an event listener for when the form is submitted (enter key or submit button clicked), and we call createPoll with the event.  We stop the form from immediately submitting, and instead extract the title and options the page using JQuery selectors.  Then, we make sure that the title exists, and that there is 1 or or more option associated with the form.  I abstracted those out into separate functions in case I wanted to change the title and option validation later, such as add a minimum/maximum amount of options, etc.</p>
+<p>The rest is a little abstract right now because I haven’t shown all of the code, but just theoretically try to understand what is going on.  If the title and options are valid, I am going to call some function buildRequest to physically create the request, and then make the request to the server using the makeRequest function (using the request that was built in buildRequest).  Here, displayPollLink is going to be used as a <strong>callback</strong> function.  So, when the request is completed and I know everything was successful, I want to display the poll link.  Now that the core idea is understood here, add the functions that I was just describing to the code.  </p>
+<figure class="highlight javascript"><figcaption><span>poll_create.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ...</span></div><div class="line"><span class="keyword">var</span> buildRequest = <span class="function"><span class="keyword">function</span>(<span class="params">$title, $options</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> ajaxData = &#123;</div><div class="line">    <span class="attr">poll_name</span>: $title.val().trim(),</div><div class="line">    <span class="attr">poll_options</span>: []</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  $.each($options, <span class="function"><span class="keyword">function</span>(<span class="params">index, option</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> $option = $(option);</div><div class="line">    <span class="keyword">if</span>($option.val() &amp;&amp; $option.val().trim())&#123;</div><div class="line">      ajaxData.poll_options.push($option.val().trim());</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> ajaxData;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> makeRequest = <span class="function"><span class="keyword">function</span>(<span class="params">req, callback</span>)</span>&#123;</div><div class="line">  $.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">"http://localhost:3000/api/poll"</span>,</div><div class="line">    <span class="attr">method</span>: <span class="string">"POST"</span>,</div><div class="line">    <span class="attr">dataType</span>: <span class="string">'json'</span>,</div><div class="line">    <span class="attr">data</span>: req</div><div class="line">  &#125;)</div><div class="line">    .done(callback)</div><div class="line">    .fail(<span class="function"><span class="keyword">function</span>(<span class="params">xhr, status, err</span>)</span>&#123;</div><div class="line">      alert(<span class="string">"Error creating poll, please try again"</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> displayPollLink =<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(res &amp;&amp; res.data &amp;&amp; res.success)&#123;</div><div class="line">    $(<span class="string">'div.poll_link'</span>).html(<span class="string">'&lt;a href="poll_view.html?poll_id='</span> + res.data._id + <span class="string">'"&gt;Link to Poll&lt;/a&gt;'</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    alert(<span class="string">"Sorry, there was an error creating the poll"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>So, buildRequest is essentially going through all of the different values that are in the input entries as options, and if they exist, adding them to the object that will get sent to the server.  It will eventually return an object that looks something like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">poll_name</span>: <span class="string">"Do You Like This Poll?"</span>,</div><div class="line">  <span class="attr">poll_options</span>: [<span class="string">"Yes"</span>,<span class="string">"No"</span>,<span class="string">"Maybe"</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Then, makeRequest takes that data, and sends a POST request using that data as an AJAX call, since that is what we defined in our server endpoint for creating polls.  Now, AJAX has these helpful functions .done and .fail.  .done will fire whenever the server responds, and .fail will call with some sort of malformed request.  So, when .done is called, it means my service has responded with the data that we set up server side in the create poll endpoint, and the callback function is called.  This function could have just as easily been written like this:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> makeRequest = <span class="function"><span class="keyword">function</span>(<span class="params">req, callback</span>)</span>&#123;</div><div class="line">  $.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">"http://localhost:3000/api/poll"</span>,</div><div class="line">    <span class="attr">method</span>: <span class="string">"POST"</span>,</div><div class="line">    <span class="attr">dataType</span>: <span class="string">'json'</span>,</div><div class="line">    <span class="attr">data</span>: req</div><div class="line">  &#125;)</div><div class="line">    .done(<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">      <span class="keyword">if</span>(res &amp;&amp; res.data &amp;&amp; res.success)&#123;</div><div class="line">        $(<span class="string">'div.poll_link'</span>).html(<span class="string">'&lt;a href="poll_view.html?poll_id='</span> + res.data._id + <span class="string">'"&gt;Link to Poll&lt;/a&gt;'</span>);</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        alert(<span class="string">"Sorry, there was an error creating the poll"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;)</div><div class="line">    .fail(<span class="function"><span class="keyword">function</span>(<span class="params">xhr, status, err</span>)</span>&#123;</div><div class="line">      alert(<span class="string">"Error creating poll, please try again"</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>However, I like to try and keep the logic a little more separate within AJAX requests, because the different callback functions can get tricky to comprehend when they get nested deeply within an AJAX request.  Either way, once the response is returned, we do a check to see if everything was successful (remember successResponse and errorResponse from our server side?) and either alert the user of an error, or insert a link to the poll if everything went as planned.  </p>
+<p>Remember how our request/responses were structured?  This is where we can find out how to access the data received.  </p>
+<img src="/2017/03/05/FSS-Client-Side-2/Postman-REQ.png" alt="Postman Request/Response" title="Postman Request/Response">
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Whew!  Try it out, run your server with a ‘node server’ in a terminal, then try navigating to <a href="http://localhost:3000/pages/poll_create.html" target="_blank" rel="external">http://localhost:3000/pages/poll_create.html</a> and see if you are able to get any links to show up when you add information to the form and submit it.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/HTML/">HTML</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/JQuery/">JQuery</a>, <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:faykade.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

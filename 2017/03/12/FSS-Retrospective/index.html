@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Project Retrospective (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Project Retrospective (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T14:55:19.000Z"><a href="/2017/03/12/FSS-Retrospective/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">Project Retrospective (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>We finally made it, a project done.  Generally during a project I come up with some alternative ways to do something, and am not always happy with the way my project came out.  That’s okay, all of these are about learning anyways, but it is worthwhile to think about aspects of the project that went well, and some that didn’t go well both during and after you finish, so the same mistakes don’t get made later.<br><a id="more"></a></p>
+<h2 id="Project-Retro"><a href="#Project-Retro" class="headerlink" title="Project Retro"></a>Project Retro</h2><p>About the project itself, I would say this went well overall as an intermediate level guide.  It shouldn’t be obscenely easy and shouldn’t be obscenely difficult either as long as you have some programming knowledge.  So, let’s review what got done during this whole experience.</p>
+<ul>
+<li>Node.js server that accepts creation, vote modification, and getting results of polls</li>
+<li>Storage backed by MongoDB using Mongoose schemas</li>
+<li>Client side DOM manipulations via JQuery to make pages to use the server functionality</li>
+<li>Basic CSS to clean up the look</li>
+</ul>
+<p>Quite a bit got done here really.  With some work, a real working product could come of this.  </p>
+<h2 id="Making-it-production-ready"><a href="#Making-it-production-ready" class="headerlink" title="Making it production ready"></a>Making it production ready</h2><p>Let’s talk about some of the changes that would definitely need to be done for this to be made more viable than a toy project.  This is by no means an exhaustive list, but are some of the ones that come to mind immediately for a working product.</p>
+<p>First, more work needs to be done for protection against user input.  We put in some minor elements in our user views to protect users at least, but something should really be done server side to protect it from ever getting stored in the database and protect ourselves as well.  </p>
+<p>Next, some work needs to get done on validation.  We did some minor validation of user input, but nothing major.  If we wanted right now, a user could input some string that is thousands of characters long, and also send hundreds of options to the server to be stored.  This doesn’t seem wise.  We should probably limit the amount of options and length of user input as well.  This would need to get done both client and server side.</p>
+<p>Finally, the user experience would need to change.  Some of the controls of this application feel clunky.  It feels odd to have to manually click on the add button to add options.  You can tab to it and hit enter, but most users aren’t going to think of that.  A mechanic should be put in place when tab gets hit, or enter gets hit, a new input box appears, then they just have to click the submit button once, instead of the add button multiple times.</p>
+<h2 id="What-went-well"><a href="#What-went-well" class="headerlink" title="What went well?"></a>What went well?</h2><p>I think overall, the server side part of this project went very well.  It utilized the correct libraries, was organized rather well, and was abstracted to a good point.  Also, I liked the very even split between client side/server side, which sometimes gets blurred with templating.  I’m also relatively pleased with the end product.  It is simplistic, yet functional.</p>
+<p>Overall, I’m very happy with this project.  There are things I would change (which are easier to remember than good things), but for the most part I think this project turned out fairly well.</p>
+<h2 id="What-would-I-change"><a href="#What-would-I-change" class="headerlink" title="What would I change?"></a>What would I change?</h2><p>Personally, I would probably do the whole client side a little differently.  This tutorial was supposed to be an intermediate level project, so I didn’t want to introduce too many different libraries.  JQuery is something that is pretty standard, however the DOM manipulations we used here are very ‘expensive’ technically.  I tried to limit them into a few injections, but I would prefer to use something that utilizes a virtual DOM and more of a modeling behavior to change the page views.  This would be a more ‘modern’ approach, and also much faster.  </p>
+<p>If not a virtual DOM, I would have <strong>maybe</strong> liked to introduce templating with EJS or Jade or something, but I liked the idea of showing how any user could use any API without being on the same server, since this is how many front end developers use API’s.  Either way, the JQuery DOM manipulation works well, but it felt a little ‘hacky’ at times, and could probably be cleaned up.</p>
+<p>Secondly, the CSS.  The look and feel of this site is okay, but it doesn’t feel quite right to me.  I would probably spend some more time prettying it up, but I haven’t found a good way to explain CSS in this blog right now, so I wanted to keep it simple and also limit the amount of CSS knowledge needed for this level of project.</p>
+<p>Finally, I would probably introduce some sort of library to make the actual results page a little more pretty, and not just display the current vote count.  There are many graphing libraries out there, and it would be an easy step to add something like this in to make a ‘pretty’ results page.</p>
+<h2 id="Blog-Retro"><a href="#Blog-Retro" class="headerlink" title="Blog Retro"></a>Blog Retro</h2><p>Secondly, I’m fairly happy with this project in terms of my blog about it.  It was my first project to blog about, and it ballooned a little bit out of proportion to what I expected.  I can write something like this code up in half a day or so, but adding the blogging dimension made me realize how much is really going on here.  However, I think I did a decent job explaining the major points of this project, and maybe went into a little too much detail on some other ones.  I find that it is difficult to know what a reader is going to already understand and what they aren’t going to understand, especially at an intermediate level project.  </p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Thanks for trying out my first project, hopefully this went well for you, and let me know in the comments below!</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:faykade.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

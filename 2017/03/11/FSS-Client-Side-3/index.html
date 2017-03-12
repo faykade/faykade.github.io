@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Client Side Part III - Poll Voting - (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Client Side Part III - Poll Voting - (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-11T20:05:56.000Z"><a href="/2017/03/11/FSS-Client-Side-3/">2017-03-11</a></time>
+      
+      
+  
+    <h1 class="title">Client Side Part III - Poll Voting - (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>So, now we have the ability for people to create new polls.  Now we want people to be able to access them.  The first step is again going to be to create our basic HTML layout, and then we’ll attach some JS logic to actually handle everything.  So, go to your client/pages directory and create a poll_view.html file and add the following.<br><a id="more"></a><br><figure class="highlight html"><figcaption><span>poll_view.html</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Poll View<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"poll_name"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">"vote_form"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"options_container"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"buttons_container"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">class</span>=<span class="string">"cast_vote"</span>&gt;</span>Cast Vote<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/util.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/poll_view.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Essentially, all we are doing is creating a place where the poll items will get populated, and a button to actually cast the vote.  So, go back into your scripts directory and make a poll_view.js file.  What are the first things that need to happen?  First of all, we need to know which poll we’re going to get.  Then, we’re going to have to actually call our service and find out what options are available for that poll.  Finally, we’ll need an ability to vote on the results.  So, let’s start with the initial logic for that.  Add the following to your poll_view.js file:<br><figure class="highlight js"><figcaption><span>poll_view.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> pollID = getUrlParameter(<span class="string">"poll_id"</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(pollID)&#123;</div><div class="line">    requestPoll(pollID, displayPollOptions);</div><div class="line">    $(<span class="built_in">document</span>).on(<span class="string">'submit'</span>, <span class="string">'#vote_form'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">      addVote(e, pollID, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">window</span>.location.href = <span class="string">'poll_results.html?poll_id='</span> + pollID;</div><div class="line">      &#125;);</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    alert(<span class="string">"Sorry, no poll_id given to search for"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>So, this is essentially the basics of what I just said.  We’re initially going to get the poll_id from the <strong>query string</strong> that we passed into the url when we made our link from the create a poll page.  Then, we request the poll information, and when the user submits their vote, it adds a vote and goes to the poll results page.  Easy enough, right?  Now, lets add in the basic functionality discussed here.  Open up the <strong>util.js</strong> file, and add the following:</p>
+<figure class="highlight js"><figcaption><span>util.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> getUrlParameter = <span class="function"><span class="keyword">function</span> <span class="title">getUrlParameter</span>(<span class="params">sParam</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> sPageURL = <span class="built_in">decodeURIComponent</span>(<span class="built_in">window</span>.location.search.substring(<span class="number">1</span>));</div><div class="line">  <span class="keyword">var</span> sURLVariables = sPageURL.split(<span class="string">'&amp;'</span>);</div><div class="line">  <span class="keyword">var</span> sParameterName;</div><div class="line">  <span class="keyword">var</span> i;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; sURLVariables.length; i++) &#123;</div><div class="line">    sParameterName = sURLVariables[i].split(<span class="string">'='</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (sParameterName[<span class="number">0</span>] === sParam) &#123;</div><div class="line">      <span class="keyword">return</span> sParameterName[<span class="number">1</span>] === <span class="literal">undefined</span> ? <span class="literal">true</span> : sParameterName[<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Now, this is stolen shamelessly from some Stack Overflow question, because for something like parsing a query string, it is usually best to go look for something that has already been written, since it is a task that <strong>many</strong> people have needed to do before.  There are other ways of doing this, but if you read through this code, essentially the author gets the query string, splits up the parameters on it, and then loops through them based on the parameter name passed in searching for the one we need.  If it is found, the function returns the value.  </p>
+<p>So, we’ve gotten our poll ID, now we just need to get the potential options related to the poll ID on this page.  So, again, in util.js, we will add our logic to get a poll.  I’m adding this to util.js instead of poll_view.js because we’ll be using the same method on our poll results page, since we are doing the same service call to get the poll either way.<br><figure class="highlight js"><figcaption><span>util.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> requestPoll = <span class="function"><span class="keyword">function</span>(<span class="params">id, callback</span>)</span>&#123;</div><div class="line">  $.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">"http://localhost:3000/api/poll?poll_id="</span> + id,</div><div class="line">    <span class="attr">method</span>: <span class="string">"GET"</span>,</div><div class="line">  &#125;)</div><div class="line">    .done(callback)</div><div class="line">    .fail(<span class="function"><span class="keyword">function</span>(<span class="params">xhr, status, err</span>)</span>&#123;</div><div class="line">      alert(<span class="string">"Error finding poll, please try again"</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>So, when the page loads, we get the ID from the query string, then request the poll based on that ID.  We should have our results, so we utilize the <strong>callback</strong> function passed to the request poll. In this case, our callback function references displayPollOptions back on line 5 of poll_view.js in the example shown above.  </p>
+<p>Alright, so since we are only displaying poll options to be voted on for this one page, let’s navigate back to our poll_view.js file, and we can add the logic to actually add in the poll options onto the page.  This is where our containers in the HTML that we created before are invaluable.<br><figure class="highlight js"><figcaption><span>poll_view.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> displayPollOptions = <span class="function"><span class="keyword">function</span>(<span class="params">pollData</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(pollData &amp;&amp; pollData.data &amp;&amp; pollData.success)&#123;</div><div class="line">    <span class="keyword">var</span> $container = $(<span class="string">'.options_container'</span>);</div><div class="line">    <span class="keyword">var</span> $titleContainer = $(<span class="string">'.poll_name'</span>);</div><div class="line">    $titleContainer.html(escapeHtml(pollData.data.poll_name));</div><div class="line">    <span class="keyword">var</span> options = [];</div><div class="line">    $.each(pollData.data.poll_options, <span class="function"><span class="keyword">function</span>(<span class="params">index, option</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> checkedStatus = index === <span class="number">0</span> ? <span class="string">' checked'</span> : <span class="string">''</span>;</div><div class="line">      <span class="keyword">var</span> optionHTML = <span class="string">'&lt;label&gt;&lt;input type="radio" name="option" value="'</span> + option._id + <span class="string">'"'</span> + checkedStatus + <span class="string">'&gt;'</span> + escapeHtml(option.option_name) + <span class="string">'&lt;/label&gt;'</span>;</div><div class="line">      options.push(optionHTML);</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">var</span> allOptions = options.join(<span class="string">'&lt;/br&gt;'</span>);</div><div class="line">    $container.html(allOptions);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    alert(<span class="string">"Sorry, there was an error retrieving the poll data"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>So, what’s happening?  I’m taking the response data that was passed to this callback, checking that it was successful, and filling the containers with the relevant data.  One of the things in this that may not be immediately understandable is the <strong>escapeHtml</strong> function usage.  Escaping the HTML is to prevent some cross site scripting.  There is a lot of literature on that online, so I suggest taking a more detailed look, but essentially it prevents people from inserting their own HTML or scripts onto the page for other users to view.  </p>
+<p>This is important because I did not escape any of the input from users on our create a poll page.  So, if somebody wanted, they could make their “poll option” something like <script>window.location.href = www.myhorriblevirus.com</script> and instead of showing that to somebody who viewed the page, the script would execute and just take you directly to the bad page, or worse.  In real practice, the input should be cleansed before ever being saved in the database, but this is more of a simple project, and doing this at least ensures that if somebody DID set this as one of their options, it will actually just show the plain text version of the script tag and the information they tried to show.  </p>
+<p>I placed this function in the util.js file as well, since it is useful whenever displaying user input back on a page.  This is another one that is taken from a stack overflow question, because cross site scripting is a <strong>very</strong> real problem, and many people have tried to solve it.  Essentially, this solution plays on the way native javascript grabs data from elements and escapes it already.  Just remember to always escape user input before displaying it back to a user as a general rule of thumb.<br><figure class="highlight js"><figcaption><span>util.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> escapeHtml = <span class="function"><span class="keyword">function</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</div><div class="line">    div.appendChild(<span class="built_in">document</span>.createTextNode(str));</div><div class="line">    <span class="keyword">return</span> div.innerHTML;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>That was a bit of a tangent, but an important one.  The other thing that may not be glaringly obvious when I’m creating the different radio buttons for the options is how I’m creating the HTML.  What is going on, is that I’m creating the option HTML one at a time, and pushing them into an array.  Each option has its unique ID set as its value, so I can access it later.  The checkedStatus is just making sure that the first option is selected by default.  Then, when all the options are done, I’m joining them into a single string, and putting a new line between each one to make sure they all appear on different lines.  Finally, the entire chunk is placed on the page.</p>
+<p>Finally, we can see our options, now we just need to handle the voting logic.  So, in our poll_view.js file, add the last piece of the puzzle:<br><figure class="highlight js"><figcaption><span>poll_view.js</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> addVote = <span class="function"><span class="keyword">function</span>(<span class="params">e, poll, callback</span>)</span>&#123;</div><div class="line">  e.preventDefault();</div><div class="line">  <span class="keyword">var</span> selectedOption = $(<span class="string">'#vote_form input[type="radio"]:checked'</span>).val();</div><div class="line">  $.ajax(&#123;</div><div class="line">    <span class="attr">url</span>: <span class="string">"http://localhost:3000/api/poll"</span>,</div><div class="line">    <span class="attr">method</span>: <span class="string">"PUT"</span>,</div><div class="line">    <span class="attr">data</span>: &#123;</div><div class="line">      <span class="attr">poll_id</span>: poll,</div><div class="line">      <span class="attr">option_id</span>: selectedOption</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">dataType</span>: <span class="string">"json"</span></div><div class="line">  &#125;)</div><div class="line">    .done(callback)</div><div class="line">    .fail(<span class="function"><span class="keyword">function</span>(<span class="params">xhr, status, err</span>)</span>&#123;</div><div class="line">      alert(<span class="string">"Error adding vote to poll, please try again"</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>So, here, I’m essentially just getting the option ID from the value of the checked radio button using JQuery selectors, and then I call the service we created.  When it is complete, the callback that was passed in is called.  In this scenario, the callback was shown way up in our first code example of poll_view.js, and it just redirects the user to the poll results page for that specific poll ID.</p>
+<p>Here is an example of a poll view from a poll that I just created</p>
+<img src="/2017/03/11/FSS-Client-Side-3/poll_view.png" alt="Poll View Example" title="Poll View Example">
+<p>Not super pretty, but again, we’re just worrying about functionality for now.  Then we’ll worry about making it look better.  So, when I cast my vote, I will get redirected to the final page we need to make.  So, check out the next part of the series to finish everything up functionality wise.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/HTML/">HTML</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/JQuery/">JQuery</a>, <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:faykade.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

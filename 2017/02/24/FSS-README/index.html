@@ -63,7 +63,26 @@
       
         <p>Build a Full Stack Strawpoll, start to finish.  This project is intended to teach the basics of a traditional client/server model using Node.js and Express to create a REST API backed by MongoDB.  Then, after building up the server side, we will using traditional front end technologies like HTML/CSS/Javascript to interact with the server.  Eventually, the plan is to link this up in another tutorial to create a Hexo plugin that will insert a strawpoll on a blog post.<br><a id="more"></a><br>This post will be a reference to progress through the tutorial, and I would suggest keeping this post open in a separate tab and then walk through each part of the tutorial.  First of all, as with any DIY project, here are a few images of the finished product first:</p>
 <h2 id="Background-Information"><a href="#Background-Information" class="headerlink" title="Background Information"></a>Background Information</h2><p>If you aren’t well versed in some of the basics of the following technologies, I would suggest reading up some of my other blog posts that will help clear up some of the more foundational aspects of what we will be building</p>
-<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2>
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ul>
+<li><a href="/2017/02/24/FSS-Project-Setup-and-Structure/" title="Project Setup and Structure (Full Stack Strawpoll)">Project Setup and Structure (Full Stack Strawpoll)</a></li>
+<li>Server Side<ul>
+<li><a href="/2017/02/24/FSS-Server-Side-1/" title="Server Side Part I - Routes - (Full Stack Strawpoll)">Server Side Part I - Routes - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/02/25/FSS-Server-Side-2/" title="Server Side Part II - Mongoose - (Full Stack Strawpoll)">Server Side Part II - Mongoose - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/02/25/FSS-Server-Side-3/" title="Server Side Part III - Logic - (Full Stack Strawpoll)">Server Side Part III - Logic - (Full Stack Strawpoll)</a></li>
+</ul>
+</li>
+<li>Client Side<ul>
+<li><a href="/2017/03/05/FSS-Client-Side-1/" title="Client Side Part I - Setup - (Full Stack Strawpoll)">Client Side Part I - Setup - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/03/05/FSS-Client-Side-2/" title="Client Side Part II - Creating a Poll - (Full Stack Strawpoll)">Client Side Part II - Creating a Poll - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/03/11/FSS-Client-Side-3/" title="Client Side Part III - Poll Voting - (Full Stack Strawpoll)">Client Side Part III - Poll Voting - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/03/11/FSS-Client-Side-4/" title="Client Side Part IV - Poll Results - (Full Stack Strawpoll)">Client Side Part IV - Poll Results - (Full Stack Strawpoll)</a></li>
+<li><a href="/2017/03/11/FSS-Client-Side-5/" title="Client Side Part V - Pretty Poll - (Full Stack Strawpoll)">Client Side Part V - Pretty Poll - (Full Stack Strawpoll)</a></li>
+</ul>
+</li>
+<li><a href="/2017/03/12/FSS-Retrospective/" title="Project Retrospective (Full Stack Strawpoll)">Project Retrospective (Full Stack Strawpoll)</a>
+</li>
+</ul>
+
       
     </div>
     <footer>
@@ -77,7 +96,7 @@
         
   
   <div class="tags">
-    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/Node-js/">Node.js</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/MongoDB/">MongoDB</a>, <a href="/tags/CSS/">CSS</a>, <a href="/tags/HTML/">HTML</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/Mongoose/">Mongoose</a>, <a href="/tags/Postman/">Postman</a>, <a href="/tags/JQuery/">JQuery</a>
+    <a href="/tags/HTML/">HTML</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/JQuery/">JQuery</a>, <a href="/tags/Node-js/">Node.js</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/CSS/">CSS</a>, <a href="/tags/MongoDB/">MongoDB</a>, <a href="/tags/Mongoose/">Mongoose</a>
   </div>
 
         
@@ -118,7 +137,7 @@
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
     <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="q" value="site:localhost:4000">
+    <input type="hidden" name="q" value="site:faykade.github.io">
   </form>
 </div>
 
@@ -136,7 +155,7 @@
 <div class="widget tag">
   <h3 class="title">Tags</h3>
   <ul class="entry">
-  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postman/">Postman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
   </ul>
 </div>
 
