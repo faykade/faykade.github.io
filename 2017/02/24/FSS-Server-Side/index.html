@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Server Side Part I (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Server Side Part I (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T05:52:39.000Z"><a href="/2017/02/24/FSS-Server-Side/">2017-02-24</a></time>
+      
+      
+  
+    <h1 class="title">Server Side Part I (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Alright, the boring stuff is out of the way, and we’re finally ready to start building something.  We’ll start off by creating the main starting point of our server.  Navigate to the server directory within our project directory and create a file, server.js.  Also, it is good practice to put configurations in a separate file than our logic, so make a file config.js in the same location.  Just as a reminder, our structure should resemble the following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- strawpoll</div><div class="line">    - client</div><div class="line">    - server</div><div class="line">        - models</div><div class="line">        server.js</div><div class="line">        config.js</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>To start out, let’s get the configurations out of the way.  Open up the config file and add something along the lines of:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">server</span>: &#123;</div><div class="line">    <span class="attr">database_host</span>: <span class="string">"mongodb://&lt;dbuser&gt;:&lt;dbpassword&gt;@HOST"</span>,</div><div class="line">    <span class="attr">port</span>: <span class="number">3000</span>,</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Now, whenever we require the config file somewhere, we’ll have access to this JSON object and can easily keep all of our variable or sensitive information in one place.  I find it is helpful to use javascript files for configurations over json files because you aren’t able to add comments in json files.  </p>
+<p>This is actually the only information I put into this configuration file during this project, but you can certainly add more if you find that it makes sense to you.  A lot of programming is personal choice, and don’t ever let a tutorial take the fun and art out of programming.</p>
+<p>Moving on to the server.js file, begin to setup the basic structure of a Node.js server with Express.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>);</div><div class="line"></div><div class="line">app.get(<span class="string">'/'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">"hello world"</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// get the port number from the server environment or the config file if running locally</span></div><div class="line"><span class="keyword">const</span> PORT = process.env.PORT || config.server.port;</div><div class="line"></div><div class="line"><span class="comment">// start the server</span></div><div class="line">app.listen(PORT, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"Server listening on: "</span> + PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>It’s always good to make sure that the most basic functionality of something is working before moving to more complex parts, so give it a shot by making sure you are in the strawpoll/server directory in a terminal and enter the following snippet.  Then, open a browser and navigate to the page <a href="http://localhost:3000">http://localhost:3000</a>, or whatever port you chose to use for your server and make sure that you get a screen that says ‘hello world’.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node server</div></pre></td></tr></table></figure></p>
+<p>So, what is going on here?  We’ve set up the server using our configuration file on the port 3000, and it is listening for requests.  We specifically defined a ‘route’ of ‘/‘ that sends a ‘res’ponse of “hello world” to any GET ‘req’uests that go to that route.  </p>
+<h2 id="Time-for-Choices"><a href="#Time-for-Choices" class="headerlink" title="Time for Choices"></a>Time for Choices</h2><p>Alright, we’ve finished most of the boilerplate for this project.  It is time to make some choices, so let’s create some routes that can handle our requests.  However, let’s think about the routes now that we are making real ones.  Someday we might want to use other parts of this server to actually serve content instead of just using it as an API.  </p>
+<p>When deciding on routes, I find it helpful to categorize things by specificity, starting with the least specific, and moving towards the most specific.  For example, if I was writing a route for a date, I would write it like ‘2017/2/24’.  This works nicely for a few reasons, everything falls into different categories that fit, and it lends itself well to routing and organization.</p>
+<p>So, lets prefix our API routes with ‘api’, and our next level of specificity for this project would be the ‘poll’, so we’re going to prefix all of our routes with ‘/api/poll/‘.  </p>
+<p>With that decided, what do we want this strawpoll to do?  What are the primary actions that need to be taken?  What extra information do we need to complete these major operations?  So, add the following near your app.get(‘/‘…) line in server.js</p>
+<h3 id="Creating-a-new-poll"><a href="#Creating-a-new-poll" class="headerlink" title="Creating a new poll"></a>Creating a new poll</h3><p>So, thinking to our HTTP request types, creating anything new will be a POST request.  We won’t need any other information here, we just know that we want to make a new poll.  This will be the basis of our route for this.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// CREATE A POLL ---------------------------------------------------------------</span></div><div class="line">app.post(<span class="string">'/api/poll'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'creating a new poll'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Getting-an-active-poll"><a href="#Getting-an-active-poll" class="headerlink" title="Getting an active poll"></a>Getting an active poll</h3><p>Alright, back to the HTTP requests, if we are just going to be retrieving data, we want to send a get request.  This request might look a little different because we use ‘:poll_id’ as part of the route.  This is Express’ way of showing a variable route.  This will match anything from /api/poll/dog to /api/poll/123456.  We just know we need a unique ID for every poll.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// GET A POLL ------------------------------------------------------------------</span></div><div class="line">app.get(<span class="string">'/api/poll/:poll_id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'getting a poll'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="Increasing-the-votes-of-a-poll-option"><a href="#Increasing-the-votes-of-a-poll-option" class="headerlink" title="Increasing the votes of a poll option"></a>Increasing the votes of a poll option</h3><p>The final route we will need is to add a vote.  We know that we need the specific poll information, and we need to know the option the user is voting for.  Again, we will utilize Express’ variable routes to handle this type of a request.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ADD VOTE  -------------------------------------------------------------------</span></div><div class="line">app.put(<span class="string">'/api/poll/:poll_id/:option_id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'adding a vote'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="Moving-Forward"><a href="#Moving-Forward" class="headerlink" title="Moving Forward"></a>Moving Forward</h2><p>Now that these are all made, restart your server (ctrl+c then restart as mentioned above), and try these routes via Postman or cURL or whatever you feel comfortable with, the routes would be accessed something like localhost:3000/api/poll.  You should receive the responses listed in the route.  After we know the server routes are working, we can begin handling the poll logic, which will be handled in the next post.  I kind of thought that I would be able to cover all of the server side information in one post, but after I got started, I figured this would be a logical step to take a break and push the rest of the server side logic into another post.  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/Node-js/">Node.js</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/Mongoose/">Mongoose</a>, <a href="/tags/Server-Side/">Server Side</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:localhost:4000">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><small>4</small></li>
+  
+    <li><a href="/tags/CSS/">CSS</a><small>1</small></li>
+  
+    <li><a href="/tags/Express/">Express</a><small>3</small></li>
+  
+    <li><a href="/tags/HTML/">HTML</a><small>1</small></li>
+  
+    <li><a href="/tags/JQuery/">JQuery</a><small>1</small></li>
+  
+    <li><a href="/tags/Javascript/">Javascript</a><small>3</small></li>
+  
+    <li><a href="/tags/MongoDB/">MongoDB</a><small>1</small></li>
+  
+    <li><a href="/tags/Mongoose/">Mongoose</a><small>3</small></li>
+  
+    <li><a href="/tags/Node-js/">Node.js</a><small>3</small></li>
+  
+    <li><a href="/tags/Postman/">Postman</a><small>1</small></li>
+  
+    <li><a href="/tags/Project-Structures/">Project Structures</a><small>1</small></li>
+  
+    <li><a href="/tags/Server-Side/">Server Side</a><small>2</small></li>
+  
+    <li><a href="/tags/test/">test</a><small>0</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

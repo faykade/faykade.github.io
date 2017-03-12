@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Project Setup and Structure (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Project Setup and Structure (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T04:32:29.000Z"><a href="/2017/02/24/FSS-Project-Setup-and-Structure/">2017-02-24</a></time>
+      
+      
+  
+    <h1 class="title">Project Setup and Structure (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Before starting any project, it is important to spend some time thinking about the directory structure.  It may seem like a waste of time, because we all just want to start writing code once we get it into our heads to start something like this, but it is always worthwhile to really think out the way your project will be laid out, and will pay dividends in the long run.  </p>
+<p>Determining project structure becomes especially important when using different build systems like Gulp.  This post also covers the different installations needed for this project.<br><a id="more"></a></p>
+<h2 id="Structure"><a href="#Structure" class="headerlink" title="Structure"></a>Structure</h2><p>This project won’t be too complex, and won’t involve any build systems, so we will have a pretty simple project setup.  Create the following directories.  While these directories are both housed in the same project, it is important to realize that they are decoupled as much as possible, and wouldn’t need to be in the same project folder.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ strawpoll</div><div class="line">    + client</div><div class="line">    + server</div><div class="line">        + models</div></pre></td></tr></table></figure></p>
+<h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><ul>
+<li>Recommended<ul>
+<li><a href="https://git-scm.com/downloads" target="_blank" rel="external">Git</a></li>
+<li><a href="https://www.getpostman.com/" target="_blank" rel="external">Postman</a></li>
+</ul>
+</li>
+<li>Required<ul>
+<li><a href="https://node.js" target="_blank" rel="external">Node.js &amp;&amp; NPM</a></li>
+<li>A MongoDB instance, I personally recommend using <a href="https://mlab.com" target="_blank" rel="external">MLab</a>, but you can also use a local setup if you want to install MongoDB</li>
+</ul>
+</li>
+</ul>
+<p>Now that we have the basic installations, lets get the packages we will need for the project installed.  Open a terminal, navigate to the project directory (I named it strawpoll), and execute the following commands one at a time:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">npm init     // follow the on screen prompts to create your node package</div><div class="line">npm install --save express</div><div class="line">npm install --save body-parser</div><div class="line">npm install --save mongoose</div></pre></td></tr></table></figure>
+<p>Express will be our router, and body-parser is needed to effectively read information posted to our different routes.  Mongoose is useful because it simplifies all of the transactions we will need to utilize with our database and allows us to create schemas, which is something that is missing if you are using something like the mongodb package.  </p>
+<p>That’s it! We’re ready to actually start the project.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/Project-Structures/">Project Structures</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:localhost:4000">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postman/">Postman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

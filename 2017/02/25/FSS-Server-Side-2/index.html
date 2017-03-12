@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Server Side Part II - Mongoose - (Full Stack Strawpoll) | Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Server Side Part II - Mongoose - (Full Stack Strawpoll)"/>
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T18:22:32.000Z"><a href="/2017/02/25/FSS-Server-Side-2/">2017-02-25</a></time>
+      
+      
+  
+    <h1 class="title">Server Side Part II - Mongoose - (Full Stack Strawpoll)</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>We’re rocking now.  We have almost everything we need to get this bad boy going.  We just finished all of the routes that we will need to make the strawpoll service work, now we just need to add some logic in there.  The last big hurdle we need to overcome is that we need to store these polls somewhere.  We want users to be able to create a poll, then come back a few days later and see how it is coming along.  To do this, we need persistent storage, and that is where MongoDB comes in, along with Mongoose.<br><a id="more"></a></p>
+<h2 id="Mongoose-Setup"><a href="#Mongoose-Setup" class="headerlink" title="Mongoose Setup"></a>Mongoose Setup</h2><p>Since every poll is going to have the same type of structure, we want to utilize the ideas of a Schema, which was popularized in more traditional relational database models.  What we want to do is set up a Mongoose <strong>model</strong> to handle our polls.  So, open up our models directory within server, and create a file called ‘poll.js’.  As a reminder, our structure now looks like this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ strawpoll</div><div class="line">    + client</div><div class="line">    + server</div><div class="line">        + models</div><div class="line">            - poll.js</div><div class="line">        - server.js</div><div class="line">        - config.js</div></pre></td></tr></table></figure></p>
+<p>Determined to use a schema, we need to settle on a structure that we want all of our polls to be stored as.  There are many ways to do this, but MongoDB is reknowned for handling json structures, so one simple one that I’m going to use here is the following:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">_id</span>: <span class="string">"UNIQUE POLL ID"</span></div><div class="line">  poll_name: <span class="string">"Do you like this poll?"</span>,</div><div class="line">  <span class="attr">poll_votes</span>: <span class="number">25</span>,</div><div class="line">  <span class="attr">poll_options</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="attr">option_name</span>: <span class="string">"Yes"</span>,</div><div class="line">      <span class="attr">vote_count</span>: <span class="number">20</span>,</div><div class="line">      <span class="attr">_id</span>: <span class="string">"UNIQUE OPTION ID"</span>,</div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="attr">option_name</span>: <span class="string">"No"</span>,</div><div class="line">      <span class="attr">vote_count</span>: <span class="number">5</span>,</div><div class="line">      <span class="attr">_id</span>: <span class="string">"UNIQUE OPTION ID"</span>,</div><div class="line">    &#125;,</div><div class="line">  ],</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>So, each poll will be a json object, and each one will have a few attributes and an array of possible options.  Now, we just need to replicate this type of structure using a schema in Mongoose.  Open our poll.js file, and add the following lines<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'../config'</span>);</div><div class="line"><span class="keyword">var</span> Schema = mongoose.Schema;</div><div class="line"></div><div class="line"><span class="comment">// plugin promise library</span></div><div class="line">mongoose.Promise = global.Promise;</div><div class="line"></div><div class="line"><span class="comment">// define the behavior we want each poll to have</span></div><div class="line"><span class="keyword">var</span> pollSchema = <span class="keyword">new</span> Schema(&#123;</div><div class="line">  <span class="attr">poll_name</span>: <span class="built_in">String</span>,</div><div class="line">  <span class="attr">poll_votes</span>: <span class="built_in">Number</span>,</div><div class="line">  <span class="attr">poll_options</span>: [&#123; <span class="attr">option_name</span>: <span class="built_in">String</span>, <span class="attr">vote_count</span>: <span class="built_in">Number</span> &#125;],</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// attach schema to the model</span></div><div class="line"><span class="keyword">var</span> Poll = mongoose.model(<span class="string">'Poll'</span>, pollSchema);</div><div class="line"></div><div class="line"><span class="comment">// export the model to be used elsewhere</span></div><div class="line"><span class="built_in">module</span>.exports = Poll;</div></pre></td></tr></table></figure></p>
+<p>Here, we are essentially just defining what type of data is in each Poll model when we instantiate the Schema with an object of the data types.  Each json object will automatically get an ID attached to it that will be a unique identifier in MongoDB (why we don’t need to explicitly declare an id field).  By exporting the model, we can use it in other files and also utilize the functionality that mongoose models offer, such as simplified queries and an easier experience creating new documents.  The promise is just to stop a deprecation warning, and explicitly defines which type of promises we want to use.  There are better performing libraries such as bluebird, but the global Promise, which is the native one included in Node.js will work fine for our purposes.</p>
+<h2 id="Final-Setup-Steps"><a href="#Final-Setup-Steps" class="headerlink" title="Final Setup Steps"></a>Final Setup Steps</h2><p>With this information, we now have the model that is going to be used, but we still need to do a bit of work in our server file before we can finally finish the service.  We need to link our server up with the model, then link with the database, and finally, add the final piece of the puzzle which lets us read data sent to the API.</p>
+<p>So, first thing is first, open up the server.js file and add a few lines to the top so we will end this section of the tutorial with something along the lines of the following.  I removed the initial app.get(‘/‘), because we won’t need it anymore, it was just for testing purposes.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</div><div class="line"><span class="keyword">var</span> app = express();</div><div class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>);</div><div class="line"><span class="keyword">var</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</div><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line"><span class="keyword">var</span> Poll = <span class="built_in">require</span>(<span class="string">'./models/poll'</span>);</div><div class="line"></div><div class="line"><span class="comment">// connect to the database in our configuration file for our mongoose models</span></div><div class="line">mongoose.connect(config.server.database_host);</div><div class="line"></div><div class="line"><span class="comment">// setup our body parser to read data sent from various sources to the API</span></div><div class="line">app.use(bodyParser.urlencoded(&#123;</div><div class="line">    <span class="attr">extended</span>: <span class="literal">true</span></div><div class="line">&#125;));</div><div class="line">app.use(bodyParser.json());</div><div class="line"></div><div class="line"><span class="comment">// CREATE A POLL ---------------------------------------------------------------</span></div><div class="line">app.post(<span class="string">'/api/poll'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'creating a new poll'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// GET A POLL ------------------------------------------------------------------</span></div><div class="line">app.get(<span class="string">'/api/poll/:poll_id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'getting a poll'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// ADD VOTE  -------------------------------------------------------------------</span></div><div class="line">app.put(<span class="string">'/api/poll/:poll_id/:option_id'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  res.send(<span class="string">'adding a vote'</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">// get the port number from the server environment or the config file if running locally</span></div><div class="line"><span class="keyword">const</span> PORT = process.env.PORT || config.server.port;</div><div class="line"></div><div class="line"><span class="comment">// start the server</span></div><div class="line">app.listen(PORT, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"Server listening on: "</span> + PORT);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>The final section of the</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a>, <a href="/tags/Node-js/">Node.js</a>, <a href="/tags/Express/">Express</a>, <a href="/tags/Javascript/">Javascript</a>, <a href="/tags/Mongoose/">Mongoose</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:localhost:4000">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postman/">Postman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

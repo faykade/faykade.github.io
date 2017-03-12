@@ -1,32 +1,334 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Simple Facade</title>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
+  <meta charset="utf-8">
+  
+  <title>Project Based Learning</title>
+  <meta name="author" content="Thomas Ulrich">
+  
+  <meta name="description" content="A simple blog to illustrate my interests in programming, television, nature, and anything else">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Project Based Learning"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Project Based Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
 </head>
+
+
 <body>
-    <div class="container">
-        <div class='row text-center'>
-    <h1>Thomas Ulrich</h1>
-    <p>null</p>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Project Based Learning</a></h1>
+  <h2><a href="/"></a></h2>
 </div>
-<div class='row'>
-    <ul>
-        
-            <li>
-                <h3><a href="/2017/02/14/hello-world/">Hello World</a></h3>
-                <div class='text-muted'>
-                    2017-02-14
-                </div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T20:16:10.000Z"><a href="/2017/02/25/FSS-Server-Side-3/">2017-02-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/25/FSS-Server-Side-3/">Server Side Part III - Logic - (Full Stack Strawpoll)</a></h1>
+  
 
-                
-            </li>
-        
-    </ul>
-</div>
-
+    </header>
+    <div class="entry">
+      
+        <p>Alright, we’ll finally finish the server side of the Strawpoll service now!  I swear we’ll be done after this one.  There has been a lot of setup, but most good projects take a fair amount of setup, then everything becomes simple.  To finish this service, all we have to do still are setup the logic in each of our routes, so we’ll go through them one at a time<br>
+      
     </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2017/02/25/FSS-Server-Side-3/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T18:22:32.000Z"><a href="/2017/02/25/FSS-Server-Side-2/">2017-02-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/25/FSS-Server-Side-2/">Server Side Part II - Mongoose - (Full Stack Strawpoll)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>We’re rocking now.  We have almost everything we need to get this bad boy going.  We just finished all of the routes that we will need to make the strawpoll service work, now we just need to add some logic in there.  The last big hurdle we need to overcome is that we need to store these polls somewhere.  We want users to be able to create a poll, then come back a few days later and see how it is coming along.  To do this, we need persistent storage, and that is where MongoDB comes in, along with Mongoose.<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2017/02/25/FSS-Server-Side-2/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T05:52:39.000Z"><a href="/2017/02/24/FSS-Server-Side-1/">2017-02-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/24/FSS-Server-Side-1/">Server Side Part I - Routes - (Full Stack Strawpoll)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Alright, the boring stuff is out of the way, and we’re finally ready to start building something.  We’ll start off by creating the main starting point of our server.  Navigate to the server directory within our project directory and create a file, server.js.  Also, it is good practice to put configurations in a separate file than our logic, so make a file config.js in the same location.  Just as a reminder, our structure should resemble the following:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ strawpoll</div><div class="line">    + client</div><div class="line">    + server</div><div class="line">        + models</div><div class="line">        - server.js</div><div class="line">        - config.js</div></pre></td></tr></table></figure></p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2017/02/24/FSS-Server-Side-1/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T04:32:29.000Z"><a href="/2017/02/24/FSS-Project-Setup-and-Structure/">2017-02-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/24/FSS-Project-Setup-and-Structure/">Project Setup and Structure (Full Stack Strawpoll)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Before starting any project, it is important to spend some time thinking about the directory structure.  It may seem like a waste of time, because we all just want to start writing code once we get it into our heads to start something like this, but it is always worthwhile to really think out the way your project will be laid out, and will pay dividends in the long run.  </p>
+<p>Determining project structure becomes especially important when using different build systems like Gulp.  This post also covers the different installations needed for this project.<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2017/02/24/FSS-Project-Setup-and-Structure/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-25T03:39:32.000Z"><a href="/2017/02/24/FSS-README/">2017-02-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/24/FSS-README/">README (Full Stack Strawpoll)</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Build a Full Stack Strawpoll, start to finish.  This project is intended to teach the basics of a traditional client/server model using Node.js and Express to create a REST API backed by MongoDB.  Then, after building up the server side, we will using traditional front end technologies like HTML/CSS/Javascript to interact with the server.  Eventually, the plan is to link this up in another tutorial to create a Hexo plugin that will insert a strawpoll on a blog post.<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2017/02/24/FSS-README/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-02-21T04:29:39.000Z"><a href="/2017/02/20/First-Real-Post/">2017-02-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/02/20/First-Real-Post/">First Real Post</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Hello world, my name is Tom, and I’m debating starting a personal blog of sorts.  It will mostly be related to programming, but will also house some of my own opinions and thoughts on matters of interest.  I don’t have a lot to say for this first post, but I plan on creating a post soon with different ideas that I’m going to explore and will hopefully keep up to date throughout this experiment.  </p>
+<p>Hopefully I’ll be able to create some interesting and enjoyable articles for people to read, thanks!</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:localhost:4000">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/">Projects</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Projects/Intermediate/">Intermediate</a><span class="category-list-count">1</span></li></ul></li></ul>
+  </ul>
+</div>
+
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Full-Stack-Strawpoll/">(Project) Full Stack Strawpoll</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JQuery/">JQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Javascript/">Javascript</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB/">MongoDB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mongoose/">Mongoose</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node-js/">Node.js</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Postman/">Postman</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Project-Structures/">Project Structures</a><span class="tag-list-count">1</span></li></ul>
+  </ul>
+</div>
+
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 Thomas Ulrich
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'faykade';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
 </body>
 </html>
